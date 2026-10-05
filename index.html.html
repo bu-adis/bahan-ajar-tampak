@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bahan Ajar Interaktif - Membuat Gambar Tampak</title>
+    <!-- Google Fonts: Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F8F9FA;
+            --navy-primary: #1E3A8A;
+            --teal-accent: #0D9488;
+            --text-dark: #1F2937;
+            --text-light: #FFFFFF;
+            --card-bg: #FFFFFF;
+            --border-color: #E5E7EB;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container Slide Main Frame */
+        .presentation-container {
+            width: 100%;
+            max-width: 960px;
+            height: 640px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Header Slide Uniform */
+        .slide-header {
+            background-color: var(--navy-primary);
+            color: var(--text-light);
+            padding: 24px 32px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+        }
+
+        .slide-header h2 {
+            font-size: 32pt;
+            font-weight: 700;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Body Slide Uniform */
+        .slide-body {
+            padding: 32px;
+            flex-grow: 1;
+            overflow-y: auto;
+            font-size: 18pt;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .slide-body p {
+            margin-bottom: 16px;
+            font-size: 18pt;
+        }
+
+        .slide-body ul, .slide-body ol {
+            margin-left: 28px;
+            margin-bottom: 16px;
+        }
+
+        .slide-body li {
+            margin-bottom: 12px;
+            font-size: 18pt;
+        }
+
+        .highlight-box {
+            background-color: #EFF6FF;
+            border-left: 5px solid var(--teal-accent);
+            padding: 16px 20px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 18pt;
+        }
+
+        /* Grid Petunjuk Penggunaan */
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .guide-item {
+            background-color: #F9FAFB;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .guide-icon {
+            background-color: var(--navy-primary);
+            color: var(--text-light);
+            font-weight: bold;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 16pt;
+            white-space: nowrap;
+        }
+
+        .guide-text {
+            font-size: 16pt;
+            line-height: 1.4;
+        }
+
+        /* Menu Grid untuk Slide 3 */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .menu-btn {
+            background-color: #F3F4F6;
+            border: 2px solid var(--teal-accent);
+            color: var(--navy-primary);
+            padding: 18px;
+            border-radius: 8px;
+            font-size: 18pt;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn:hover {
+            background-color: var(--teal-accent);
+            color: var(--text-light);
+            transform: translateY(-2px);
+        }
+
+        /* Footer / Navigation Controls */
+        .slide-footer {
+            padding: 16px 32px;
+            background-color: #F3F4F6;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-right-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--teal-accent);
+            color: var(--text-light);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 18pt;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .nav-btn:hover {
+            background-color: #0F766E;
+        }
+
+        .nav-btn-secondary {
+            background-color: var(--navy-primary);
+        }
+
+        .nav-btn-secondary:hover {
+            background-color: #1E40AF;
+        }
+
+        .nav-btn-back {
+            background-color: #6B7280;
+        }
+
+        .nav-btn-back:hover {
+            background-color: #4B5563;
+        }
+
+        /* General Slide Display Control */
+        .slide {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Beranda & Penutup Custom Center Style */
+        .hero-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            padding: 40px;
+        }
+
+        .hero-title {
+            font-size: 32pt;
+            color: var(--navy-primary);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero-subtitle {
+            font-size: 18pt;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            max-width: 750px;
+        }
+
+        .developer-info {
+            background-color: #EFF6FF;
+            border: 2px dashed var(--navy-primary);
+            padding: 16px 28px;
+            border-radius: 8px;
+            font-size: 18pt;
+            color: var(--navy-primary);
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+
+        .start-btn {
+            font-size: 18pt;
+            padding: 16px 40px;
+            background-color: var(--teal-accent);
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+            transition: all 0.2s;
+        }
+
+        .start-btn:hover {
+            background-color: #0F766E;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation-container">
+
+    <!-- SLIDE 1: BERANDA -->
+    <div class="slide active" id="slide-1">
+        <div class="hero-body">
+            <h1 class="hero-title">MEMBUAT GAMBAR TAMPAK</h1>
+            <p class="hero-subtitle">Bahan Ajar Interaktif Konstruksi & Utilitas Gedung (DPIB Fase F / Kelas XI)</p>
+            <button class="start-btn" onclick="goToSlide(2)">[ MULAI PEMBELAJARAN ]</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: PETUNJUK PENGGUNAAN -->
+    <div class="slide" id="slide-2">
+        <div class="slide-header">
+            <h2>PETUNJUK PENGGUNAAN</h2>
+        </div>
+        <div class="slide-body">
+            <div class="highlight-box">
+                <strong>Panduan Navigasi Modul Interaktif:</strong> Bacalah petunjuk berikut agar dapat menggunakan bahan ajar ini dengan lancar.
+            </div>
+            <div class="guide-grid">
+                <div class="guide-item">
+                    <span class="guide-icon">Menu</span>
+                    <div class="guide-text">
+                        <strong>Tombol Pilihan Topik:</strong> Klik kotak topik pada Menu Utama untuk langsung menuju ke materi yang diinginkan.
+                    </div>
+                </div>
+                <div class="guide-item">
+                    <span class="guide-icon">Lanjut</span>
+                    <div class="guide-text">
+                        <strong>Tombol Lanjut:</strong> Berada di pojok kanan bawah untuk melangkah ke halaman materi berikutnya.
+                    </div>
+                </div>
+                <div class="guide-item">
+                    <span class="guide-icon" style="background-color: #6B7280;">Kembali</span>
+                    <div class="guide-text">
+                        <strong>Tombol Kembali:</strong> Terletak di sebelah kiri tombol Lanjut untuk mundur ke 1 halaman sebelumnya.
+                    </div>
+                </div>
+                <div class="guide-item">
+                    <span class="guide-icon">Kembali ke Menu</span>
+                    <div class="guide-text">
+                        <strong>Tombol Kembali ke Menu:</strong> Berada di pojok kiri bawah untuk melompat langsung ke Menu Utama.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <button class="nav-btn nav-btn-secondary" onclick="goToSlide(1)">Beranda</button>
+            <button class="nav-btn" onclick="goToSlide(3)">Masuk Menu Utama</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: MENU UTAMA -->
+    <div class="slide" id="slide-3">
+        <div class="slide-header">
+            <h2>MENU UTAMA PEMBELAJARAN</h2>
+        </div>
+        <div class="slide-body">
+            <p>Pilih materi atau modul yang ingin dipelajari hari ini:</p>
+            <div class="menu-grid">
+                <button class="menu-btn" onclick="goToSlide(4)">1. Pengertian & Fungsi</button>
+                <button class="menu-btn" onclick="goToSlide(5)">2. Bentuk-Bentuk Atap</button>
+                <button class="menu-btn" onclick="goToSlide(6)">3. Elemen Kelengkapan</button>
+                <button class="menu-btn" onclick="goToSlide(7)">4. Langkah Menggambar</button>
+                <button class="menu-btn" onclick="goToSlide(8)">5. Latihan Soal Essay</button>
+                <button class="menu-btn" onclick="goToSlide(9)">6. Refleksi Pembelajaran</button>
+            </div>
+        </div>
+        <div class="slide-footer">
+            <button class="nav-btn nav-btn-secondary" onclick="goToSlide(2)">Petunjuk Penggunaan</button>
+            <button class="nav-btn" onclick="goToSlide(10)">Slide Penutup</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: PENGERTIAN & FUNGSI -->
+    <div class="slide" id="slide-4">
+        <div class="slide-header">
+            <h2>PENGERTIAN & FUNGSI GAMBAR TAMPAK</h2>
+        </div>
+        <div class="slide-body">
+            <p><strong>Pengertian:</strong> Gambar tampak adalah gambaran wujud benda terluar/eksterior dari perencanaan denah yang dibangun dalam bentuk proyeksi ortogonal (2D) maupun piktorial (3D).</p>
+            <p><strong>Fungsi Utama:</strong></p>
+            <ul>
+                <li>Menunjukkan dimensi, proporsi, dan estetika eksterior bangunan secara terukur.</li>
+                <li>Mengomunikasikan jenis material serta gaya arsitektur kepada pelaksana dan klien.</li>
+                <li>Menyajikan 4 arah pandang utama: Tampak Depan, Belakang, Samping Kanan, dan Samping Kiri.</li>
+            </ul>
+        </div>
+        <div class="slide-footer">
+            <button class="nav-btn nav-btn-secondary" onclick="goToSlide(3)">Kembali ke Menu</button>
+            <div class="nav-right-group">
+                <button class="nav-btn nav-btn-back" onclick="goToSlide(3)">Kembali</button>
+                <button class="nav-btn" onclick="goToSlide(5)">Lanjut</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: BENTUK ATAP -->
+    <div class="slide" id="slide-5">
+        <div class="slide-header">
+            <h2>BENTUK-BENTUK ATAP BANGUNAN</h2>
+        </div>
+        <div class="slide-body">
+            <ul>
+                <li><strong>Atap Pelana:</strong> Memiliki dua bidang miring yang dihubungkan oleh bubungan di tengah; mudah dirawat dan populer di masyarakat.</li>
+                <li><strong>Atap Perisai / Limasan:</strong> Terdiri dari 4 bidang miring (2 trapesium, 2 segitiga); sangat efektif mengalirkan air hujan dari segala sisi.</li>
+                <li><strong>Atap Datar:</strong> Diterapkan pada rumah modern/kontemporer berbahan dak beton; membutuhkan sistem drainase yang presisi.</li>
+                <li><strong>Atap Miring (Shed):</strong> Memberikan kesan modern dan sering dikombinasikan dengan bentuk atap lain.</li>
+            </ul>
+        </div>
+        <div class="slide-footer">
+            <button class="nav-btn nav-btn-secondary" onclick="goToSlide(3)">Kembali ke Menu</button>
+            <div class="nav-right-group">
+                <button class="nav-btn nav-btn-back" onclick="goToSlide(4)">Kembali</button>
+                <button class="nav-btn" onclick="goToSlide(6)">Lanjut</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: KOMPONEN KELENGKAPAN -->
+    <div class="slide" id="slide-6">
+        <div class="slide-header">
+            <h2>ELEMEN & KOMPONEN GAMBAR TAMPAK</h2>
+        </div>
+        <div class="slide-body">
+            <ul>
+                <li><strong>Bagian Atap:</strong> Bentuk atap, sudut kemiringan, lisplang, dan kluwung/cerobong.</li>
+                <li><strong>Bagian Badan:</strong> Kusen, daun pintu/jendela, ventilasi (bovenlight), serta finishing dinding/ornamen.</li>
+                <li><strong>Bagian Kaki:</strong> Elevasi/peil lantai, teras, tangga/trop, dan garis tanah tebal.</li>
+                <li><strong>Elemen Pendukung (Rendering):</strong> Notasi material (batu tempel, kayu, genting) serta skala manusia, pohon, dan kendaraan untuk pembanding proporsi.</li>
+            </ul>
+        </div>
+        <div class="slide-footer">
+            <button class="nav-btn nav-btn-secondary" onclick="goToSlide(3)">Kembali ke Menu</button>
+            <div class="nav-right-group">
+                <button class="nav-btn nav-btn-back" onclick="goToSlide(5)">Kembali</button>
+                <button class="nav-btn" onclick="goToSlide(7)">Lanjut</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: LANGKAH MENGGAMBAR -->
+    <div class="slide" id="slide-7">
+        <div class="slide-header">
+            <h2>TAHAPAN MENGGAMBAR TAMPAK</h2>
+        </div>
+        <div class="slide-body">
+            <ol>
+                <li><strong>Buat Rencana Atap:</strong> Tentukan jenis atap dan tritisan (overstek) sekitar 80–100 cm.</li>
+                <li><strong>Tarik Garis Proyeksi Denah:</strong> Proyeksikan batas dinding terluar, lebar pintu, dan jendela langsung dari denah.</li>
+                <li><strong>Tentukan Ketinggian:</strong> Buat garis elevasi lantai, tinggi dinding (±3.5 m), dan sudut atap (30°–35°).</li>
+                <li><strong>Detailkan Pintu & Jendela:</strong> Gambar bentuk dan ukuran kusen serta bukaan pintu/jendela.</li>
+                <li><strong>Finishing & Rendering:</strong> Tambahkan elevasi lantai, notasi material, garis tanah, serta simbol pendukung.</li>
+            </ol>
+        </div>
+        <div class="slide-footer">
+            <button class="nav-btn nav-btn-secondary" onclick="goToSlide(3)">Kembali ke Menu</button>
+            <div class="nav-right-group">
+                <button class="nav-btn nav-btn-back" onclick="goToSlide(6)">Kembali</button>
+                <button class="nav-btn" onclick="goToSlide(8)">Lanjut ke Latihan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: LATIHAN SOAL ESSAY -->
+    <div class="slide" id="slide-8">
+        <div class="slide-header">
+            <h2>LATIHAN SOAL ESSAY</h2>
+        </div>
+        <div class="slide-body">
+            <div class="highlight-box">
+                <strong>Instruksi:</strong> Bacalah studi kasus di bawah ini, lalu tuliskan jawaban lengkap di <strong>buku catatan/gambar</strong> masing-masing!
+            </div>
+            <ol>
+                <li><strong>Studi Kasus Elevasi Lahan:</strong> Pak Adi memiliki lahan dengan ketinggian sama dengan jalan. Agar rumah tidak rawan kemasukan air saat hujan deras, bagaimana solusi desain elevasi dan lantai teras pada gambar tampak?</li>
+                <li><strong>Studi Kasus Skala & Proporsi:</strong> Elemen pendukung apa saja yang perlu ditambahkan pada gambar tampak agar pembaca awam dapat membayangkan skala dan ukuran sebenarnya tanpa membaca angka dimensi?</li>
+                <li><strong>Studi Kasus Pemilihan Atap:</strong> Jelaskan kelebihan dan kekurangan bentuk Atap Pelana dibandingkan dengan Atap Perisai/Limasan jika diterapkan pada bangunan rumah tinggal di daerah tropis!</li>
+                <li><strong>Studi Kasus Proyeksi Dinding & Kusen:</strong> Mengapa penarikan garis proyeksi dari gambar denah sangat menentukan ketepatan letak pintu, jendela, dan batas dinding pada gambar tampak? Jelaskan risikonya jika garis proyeksi tidak tegak lurus!</li>
+                <li><strong>Studi Kasus Notasi Material & Rendering:</strong> Mengapa tampilan rendering dan pemberian tekstur material (seperti batu tempel, kayu, atau dinding masif) sangat dibutuhkan dalam menyajikan gambar tampak yang komunikatif bagi klien?</li>
+            </ol>
+        </div>
+        <div class="slide-footer">
+            <button class="nav-btn nav-btn-secondary" onclick="goToSlide(3)">Kembali ke Menu</button>
+            <div class="nav-right-group">
+                <button class="nav-btn nav-btn-back" onclick="goToSlide(7)">Kembali</button>
+                <button class="nav-btn" onclick="goToSlide(9)">Selesai Latihan & Refleksi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: REFLEKSI SISWA -->
+    <div class="slide" id="slide-9">
+        <div class="slide-header">
+            <h2>LEMBAR REFLEKSI SISWA</h2>
+        </div>
+        <div class="slide-body">
+            <div class="highlight-box">
+                <strong>Instruksi:</strong> Salin dan jawablah 3 pertanyaan refleksi diri berikut pada <strong>buku catatan</strong> milikmu:
+            </div>
+            <ol>
+                <li><strong>Pemahaman Materi:</strong> Bagian mana dari tahapan menggambar tampak yang paling mudah dan paling sulit kamu pahami?</li>
+                <li><strong>Keterampilan Teknis:</strong> Apakah kamu sudah dapat memproyeksikan denah menjadi tampak depan secara presisi? Apa kendala utamamu?</li>
+                <li><strong>Rencana Tindak Lanjut:</strong> Hal apa yang akan kamu tingkatkan agar tampilan gambar tampak buatanmu terlihat lebih menarik dan komunikatif?</li>
+            </ol>
+        </div>
+        <div class="slide-footer">
+            <button class="nav-btn nav-btn-secondary" onclick="goToSlide(3)">Kembali ke Menu</button>
+            <div class="nav-right-group">
+                <button class="nav-btn nav-btn-back" onclick="goToSlide(8)">Kembali</button>
+                <button class="nav-btn" onclick="goToSlide(10)">Lanjut ke Penutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: SLIDE PENUTUP -->
+    <div class="slide" id="slide-10">
+        <div class="hero-body">
+            <h1 class="hero-title" style="color: var(--teal-accent);">🎉 SELAMAT! 🎉</h1>
+            <p class="hero-subtitle">
+                Kamu telah berhasil menyelesaikan pemahaman materi <strong>Gambar Tampak</strong> sebagai pengantar sebelum memulai proyek menggambar tampak secara mandiri. Siapkan denahmu dan mari kita mulai berkarya!
+            </p>
+            <div class="developer-info">
+                <strong>Pengembang Bahan Ajar:</strong><br>
+                <strong>Ar. Adisthya Mellisa Rukmana, IAI</strong><br>
+                <span>Guru Mata Pelajaran DPIB - SMK Negeri 8 Pontianak</span>
+            </div>
+            <button class="start-btn" onclick="goToSlide(1)">[ KEMBALI KE BERANDA ]</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function goToSlide(slideNumber) {
+        const slides = document.querySelectorAll('.slide');
+        slides.forEach(slide => {
+            slide.classList.remove('active');
+        });
+
+        const targetSlide = document.getElementById('slide-' + slideNumber);
+        if (targetSlide) {
+            targetSlide.classList.add('active');
+        }
+    }
+</script>
+
+</body>
+</html>
